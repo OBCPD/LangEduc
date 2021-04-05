@@ -1,12 +1,10 @@
 body {
-  width: 100%;
-  height: 100%;
-  background-color: #888888;
+  background-color: #acc9f1;
   background-attachment: fixed;
+  padding-bottom: 15px;
 }
 
 #header {
-  width: 100%;
   height: auto;
   background-color: black;
   padding: 1em;
@@ -49,6 +47,8 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  background-color: #3f83e0;
+  padding: 5px;
 }
 #webcam-container {
   margin-top: 20px;
