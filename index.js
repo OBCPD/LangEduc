@@ -1,10 +1,14 @@
 const URL = "https://teachablemachine.withgoogle.com/models/0VVapoU7Y/";
 
 let model, webcam, labelContainer, maxPredictions;
-let startFlag = true;
+let startCamFlag = true,
+  startUpFlag = true;
 
 let language = "ENG",
   languageCont = 0;
+
+let camButton = document.getElementById("camButton"),
+  upButton = document.getElementById("upButton");
 
 function languageHandler() {
   languageCont += 1;
@@ -14,39 +18,68 @@ function languageHandler() {
   } else if (languageCont == 1) {
     language = "PORT";
     document.getElementById("lang").textContent = "Português";
-    if (document.getElementById("button").textContent == "Start") {
-      document.getElementById("button").textContent = "Começar";
+
+    if (camButton.textContent == "Start Webcam") {
+      camButton.textContent = "Começar Webcam";
     } else {
-      document.getElementById("button").textContent = "Parar";
+      camButton.textContent = "Parar";
+    }
+
+    if (upButton.textContent == "Upload Image") {
+      upButton.textContent = "Enviar imagem";
+    } else {
+      upButton.textContent = "Fechar";
     }
   } else if (languageCont == 2) {
     language = "SPA";
     document.getElementById("lang").textContent = "Español";
-    if (document.getElementById("button").textContent == "Começar") {
-      document.getElementById("button").textContent = "Comenzar";
+    if (camButton.textContent == "Começar Webcam") {
+      camButton.textContent = "Comenzar Webcam";
     } else {
-      document.getElementById("button").textContent = "Detener";
+      camButton.textContent = "Detener";
+    }
+
+    if (upButton.textContent == "Enviar imagem") {
+      upButton.textContent = "Cargar imagen";
+    } else {
+      upButton.textContent = "Cerrar";
     }
   } else {
     language = "ENG";
     document.getElementById("lang").textContent = "English";
-    if (document.getElementById("button").textContent == "Comenzar") {
-      document.getElementById("button").textContent = "Start";
+    if (camButton.textContent == "Comenzar Webcam") {
+      camButton.textContent = "Start Webcam";
     } else {
-      document.getElementById("button").textContent = "Stop";
+      camButton.textContent = "Stop";
+    }
+
+    if (upButton.textContent == "Cargar imagen") {
+      upButton.textContent = "Upload Image";
+    } else {
+      upButton.textContent = "Close";
     }
     languageCont = 0;
   }
 }
 
-function startHandler() {
-  if (startFlag) {
-    init();
-  } else {
-    stop();
-  }
-  startFlag = !startFlag;
+function startCamHandler() {
+  if (startCamFlag) init();
+  else stop();
+
+  startCamFlag = !startCamFlag;
 }
+
+function startUpHandler() {
+  if (startUpFlag) openUploadImage();
+  else closeUploadImage();
+  startUpFlag = !startUpFlag;
+}
+
+async function openUploadImage() {
+  document.getElementById("inp").className = "";
+  document.getElementById("canvas").className = "";
+}
+
 // Load the image model and setup the webcam
 async function init() {
   const modelURL = URL + "model.json";
@@ -72,11 +105,9 @@ async function init() {
 
   labelContainer.appendChild(document.createElement("div"));
 
-  if (language == "ENG") document.getElementById("button").textContent = "Stop";
-  else if (language == "PORT")
-    document.getElementById("button").textContent = "Parar";
-  else if (language == "SPA")
-    document.getElementById("button").textContent = "Detener";
+  if (language == "ENG") camButton.textContent = "Stop";
+  else if (language == "PORT") camButton.textContent = "Parar";
+  else if (language == "SPA") camButton.textContent = "Detener";
 
   document.getElementById("webcam-container").className = "";
   document.getElementById("label-container").className = "";
@@ -93,12 +124,9 @@ async function stop() {
     labelContainer.removeChild(labelContainer.children[0]);
   }
 
-  if (language == "ENG")
-    document.getElementById("button").textContent = "Start";
-  else if (language == "PORT")
-    document.getElementById("button").textContent = "Começar";
-  else if (language == "SPA")
-    document.getElementById("button").textContent = "Comenzar";
+  if (language == "ENG") camButton.textContent = "Start Webcam";
+  else if (language == "PORT") camButton.textContent = "Começar Webcam";
+  else if (language == "SPA") camButton.textContent = "Comenzar Webcam";
 
   document.getElementById("webcam-container").className = "d-none";
   document.getElementById("label-container").className = "d-none";
@@ -111,11 +139,13 @@ async function loop() {
 }
 
 // run the webcam image through the image model
-async function predict() {
+async function predict(imageModel = webcam.canvas) {
   let highestProbability;
   let lastProbability = 0;
   // predict can take in an image, video or canvas html element
-  const prediction = await model.predict(webcam.canvas);
+
+  const prediction = await model.predict(imageModel);
+  console.log(prediction);
   for (let i = 0; i < maxPredictions; i++) {
     if (prediction[i].probability.toFixed(2) > lastProbability)
       highestProbability = i;
@@ -144,4 +174,35 @@ async function predict() {
     }
   }
   labelContainer.childNodes[0].innerHTML = classNameShow;
+}
+
+//Uploading Image
+
+document.getElementById("inp").onchange = function (e) {
+  var img = new Image();
+  img.onload = draw;
+  img.onerror = failed;
+  img.src = window.URL.createObjectURL(this.files[0]);
+};
+async function draw() {
+  var canvas = document.getElementById("canvas");
+  canvas.width = this.width;
+  canvas.height = this.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(this, 0, 0);
+
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+
+  labelContainer = document.getElementById("label-container");
+  labelContainer.appendChild(document.createElement("div"));
+
+  labelContainer.className = "";
+  await predict(canvas);
+}
+function failed() {
+  console.error("The provided file couldn't be loaded as an Image media");
 }
