@@ -63,21 +63,51 @@ function languageHandler() {
 }
 
 function startCamHandler() {
-  if (startCamFlag) init();
-  else stop();
-
-  startCamFlag = !startCamFlag;
+  if (startUpFlag) {
+    if (startCamFlag) init();
+    else stop();
+    startCamFlag = !startCamFlag;
+  }
 }
 
 function startUpHandler() {
-  if (startUpFlag) openUploadImage();
-  else closeUploadImage();
-  startUpFlag = !startUpFlag;
+  if (startCamFlag) {
+    if (startUpFlag) openUploadImage();
+    else closeUploadImage();
+    startUpFlag = !startUpFlag;
+  }
 }
 
-async function openUploadImage() {
+function openUploadImage() {
   document.getElementById("inp").className = "";
   document.getElementById("canvas").className = "";
+
+  if (language == "ENG") upButton.textContent = "Close";
+  else if (language == "PORT") upButton.textContent = "Fechar";
+  else if (language == "SPA") upButton.textContent = "Cerrar";
+}
+function closeUploadImage() {
+  labelContainer = document.getElementById("label-container");
+  let canvas = document.getElementById("canvas"),
+    input = document.getElementById("inp");
+
+  //Hiding input
+  input.className = "d-none";
+  input.value = null;
+
+  //Removing Label
+  labelContainer.className = "d-none";
+  if (labelContainer.children.length > 0)
+    labelContainer.removeChild(labelContainer.children[0]);
+  canvas.className = "d-none";
+
+  //Clear canvas
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (language == "ENG") upButton.textContent = "Upload Image";
+  else if (language == "PORT") upButton.textContent = "Enviar imagem";
+  else if (language == "SPA") upButton.textContent = "Cargar imagen";
 }
 
 // Load the image model and setup the webcam
@@ -120,9 +150,7 @@ async function stop() {
   labelContainer = document.getElementById("label-container");
   console.log(labelContainer.children);
 
-  while (labelContainer.children.length > 0) {
-    labelContainer.removeChild(labelContainer.children[0]);
-  }
+  labelContainer.removeChild(labelContainer.children[0]);
 
   if (language == "ENG") camButton.textContent = "Start Webcam";
   else if (language == "PORT") camButton.textContent = "Começar Webcam";
