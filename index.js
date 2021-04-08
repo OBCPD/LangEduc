@@ -31,7 +31,7 @@ async function logIn() {
     onRejected
   );
 }
-async function signIn() {
+async function signUp() {
   const username = document.getElementById("username").value;
   const pass = document.getElementById("pass").value;
   let span = document.getElementById("returnMsg");
