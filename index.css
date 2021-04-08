@@ -4,6 +4,35 @@ body {
   padding-bottom: 15px;
 }
 
+#form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  font-size: 1.2em;
+}
+#form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 20px;
+}
+#form label {
+  margin-top: 10px;
+}
+
+.redSpan {
+  margin-top: 10px;
+  font-size: 0.7em;
+  color: red;
+}
+.blueSpan {
+  margin-top: 10px;
+  font-size: 0.7em;
+  color: blue;
+}
 #header {
   height: auto;
   background-color: black;

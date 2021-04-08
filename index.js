@@ -1,4 +1,53 @@
+//Teachable Machine model Url
 const URL = "https://teachablemachine.withgoogle.com/models/0VVapoU7Y/";
+
+//Connecting with Sashido server
+Parse.initialize(
+  "QXmlDnE7daKvXNZSzWDqu4ETRQJjT9TFVRMVNSpS",
+  "nZWhqfsMjfdTtzXqwAWiHV9hTJfMNjWRTTUVMRNF"
+);
+Parse.serverURL =
+  "https://pg-app-ux3nnb9n64wcjhjysie6zdc5fdd1x8.scalabl.cloud/1/";
+
+async function logIn() {
+  const username = document.getElementById("username").value;
+  const pass = document.getElementById("pass").value;
+  const formContainer = document.getElementById("form-container");
+  const container = document.getElementById("container");
+  let span = document.getElementById("returnMsg");
+
+  const onFulfilled = () => {
+    formContainer.parentNode.removeChild(formContainer);
+    container.className = "";
+  };
+
+  const onRejected = () => {
+    span.textContent = "Wrong user or password";
+    span.className = "redSpan";
+  };
+
+  const user = await Parse.User.logIn(username, pass).then(
+    onFulfilled,
+    onRejected
+  );
+}
+async function signIn() {
+  const username = document.getElementById("username").value;
+  const pass = document.getElementById("pass").value;
+  let span = document.getElementById("returnMsg");
+  const user = new Parse.User();
+  user.set("username", username);
+  user.set("password", pass);
+
+  try {
+    await user.signUp();
+    span.textContent = "Successfully signed Up";
+    span.className = "blueSpan";
+  } catch (error) {
+    span.textContent = "Error: " + error.code + " " + error.message;
+    span.className = "redSpan";
+  }
+}
 
 let model, webcam, labelContainer, maxPredictions;
 let startCamFlag = true,
@@ -12,7 +61,6 @@ let camButton = document.getElementById("camButton"),
 
 function languageHandler() {
   languageCont += 1;
-  console.log(languageCont);
   if (languageCont == 0) {
     language = "ENG";
   } else if (languageCont == 1) {

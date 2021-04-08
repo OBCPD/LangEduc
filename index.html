@@ -7,7 +7,21 @@
 </head>
 
 <body>
-    <div id="container">
+    <div id="form-container">
+        <form id="form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <label for="pass">Password:</label>
+            <input type="password" id="pass" name="pass">
+        </form>
+        <div id="buttons=container">
+            <button type="button" onclick="logIn()" id="login">LogIn</button>
+            <button type="button" onclick="signIn()" id="signin">SignIn</button>
+        </div>
+        <span id="returnMsg"></span>
+    </div>
+
+    <div id="container" class = "d-none">
         <div id="header">
             <img src="./assets/LangEduc (3).png" id="logo"/>
             <button type="button" onclick="languageHandler()" id="lang">English</button>
@@ -19,17 +33,18 @@
             
         </div>
         
-<div id="game-container">
-    <div id="webcam-container" class="d-none"></div>
-    
+        <div id="game-container">
+            <div id="webcam-container" class="d-none"></div>
+            
 
-    <input type="file" id="inp" class="d-none">
-    <canvas id="canvas" class="d-none"></canvas>
+            <input type="file" id="inp" class="d-none">
+            <canvas id="canvas" class="d-none"></canvas>
 
-    <div id="label-container" class="d-none"></div>
-</div>
+            <div id="label-container" class="d-none"></div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.1.0/parse.min.js"></script>
         <script src="./index.js"></script>
     </div>
 
