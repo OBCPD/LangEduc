@@ -2,6 +2,7 @@
 const URL = "https://teachablemachine.withgoogle.com/models/0VVapoU7Y/";
 
 //Connecting with Sashido server
+
 Parse.initialize(
   "QXmlDnE7daKvXNZSzWDqu4ETRQJjT9TFVRMVNSpS",
   "nZWhqfsMjfdTtzXqwAWiHV9hTJfMNjWRTTUVMRNF"
@@ -50,8 +51,10 @@ async function signUp() {
 }
 
 let model, webcam, labelContainer, maxPredictions;
-let startCamFlag = true,
-  startUpFlag = true;
+//is started Webcam flag
+let startCamFlag = true;
+//is started Upload flag
+let startUpFlag = true;
 
 let language = "ENG",
   languageCont = 0;
@@ -127,9 +130,11 @@ function startUpHandler() {
 }
 
 function openUploadImage() {
+  //Showing elements
   document.getElementById("inp").className = "";
   document.getElementById("canvas").className = "";
 
+  //Changing button text
   if (language == "ENG") upButton.textContent = "Close";
   else if (language == "PORT") upButton.textContent = "Fechar";
   else if (language == "SPA") upButton.textContent = "Cerrar";
@@ -183,10 +188,12 @@ async function init() {
 
   labelContainer.appendChild(document.createElement("div"));
 
+  //Changing button text
   if (language == "ENG") camButton.textContent = "Stop";
   else if (language == "PORT") camButton.textContent = "Parar";
   else if (language == "SPA") camButton.textContent = "Detener";
 
+  //Showing containers
   document.getElementById("webcam-container").className = "";
   document.getElementById("label-container").className = "";
 }
@@ -200,10 +207,12 @@ async function stop() {
 
   labelContainer.removeChild(labelContainer.children[0]);
 
+  //Changing button text
   if (language == "ENG") camButton.textContent = "Start Webcam";
   else if (language == "PORT") camButton.textContent = "Começar Webcam";
   else if (language == "SPA") camButton.textContent = "Comenzar Webcam";
 
+  //Hiding containers
   document.getElementById("webcam-container").className = "d-none";
   document.getElementById("label-container").className = "d-none";
 }
