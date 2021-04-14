@@ -9,4 +9,7 @@ Before developing the project, we made lots of searches and found out that toddl
 ## Resources: ##
 Link to test the project:
 		https://keen-edison-b683dc.netlify.app
+Used technologies: \n
+		*https://www.sashido.io/en/
+		*https://teachablemachine.withgoogle.com/
 
