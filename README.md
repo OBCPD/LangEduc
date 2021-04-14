@@ -6,7 +6,7 @@ First of all, we are going to talk about our idea. Our project is called LangEdu
 
 Before developing the project, we made lots of searches and found out that toddlers can learn languages easily if they learn with images. Thus, we had the idea to develop an application using Teachable Machine, to make it easier for children to have their first contact with foreign languages and start their learning, something that will be very important if they decide to actually study deeply the chosen language.
 
-## Resources ##
+## Resources: ##
 Link to test the project:
 		https://keen-edison-b683dc.netlify.app
 
