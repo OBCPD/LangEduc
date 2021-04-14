@@ -1,5 +1,5 @@
 # LangEduc
-Introduction:
+*Introduction:
 Hi everyone! I and my friend Marcos @marcostx7 are Brazilian High-School students doing an internship at SashiDo.
 
 First of all, we are going to talk about our idea. Our project is called LangEduc, which is an abbreviation of the words "Language" and "Education". Basically, this project aims to help children to learn other languages, especially English. In Brazil, toddlers have lots of difficulties learning English, mostly because the educational system here is very theoretical and does not encourage children to learn English as well as other foreign languages dynamically.
